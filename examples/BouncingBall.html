@@ -15,10 +15,10 @@
 
 		}
 	</style>
-	<script type="text/javascript" src="Page.js"></script>
-	<script type="text/javascript" src="Entity.js"></script>
-	<script type="text/javascript" src="Clonehood.js"></script>
-	<script type="text/javascript" src="Input.js"></script>
+	<script type="text/javascript" src="../Page.js"></script>
+	<script type="text/javascript" src="../Entity.js"></script>
+	<script type="text/javascript" src="../Clonehood.js"></script>
+	<script type="text/javascript" src="../Input.js"></script>
 	<script type="text/javascript">
 		document.addEventListener("DOMContentLoaded", function() {
 			page = new Page(document.getElementById("canvas"));
@@ -33,7 +33,6 @@
 
 			ball = new Circ(page.canvas.width/2, 30, 20, "blue");
 			gravity = .25;
-			ball.vx = 0;
 			ball.vy = 0;
 			ball.update = function(game) {
 				this.vy -= gravity;
