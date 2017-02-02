@@ -7,7 +7,10 @@
 			margin: 0;
 			background-color: white;
 		}
-
+		@font-face {
+			font-family: "Emulator";
+			src: url("Emulator.ttf");
+		}
 	</style>
 	<script type="text/javascript" src="../Page.js"></script>
 	<script type="text/javascript" src="../Entity.js"></script>
@@ -17,6 +20,10 @@
 	<script type="text/javascript">
 		document.addEventListener("DOMContentLoaded", function() {
 			page = new Page(document.getElementById("canvas"));
+			page.clear = function() {
+				this.ctx.fillStyle = "black";
+				this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+			};
 			page.canvas.width = window.innerWidth;
 			page.canvas.height = window.innerHeight;
 			mouse = new Mouse();
@@ -26,9 +33,7 @@
 			bottom.update = function(game) {this.width = game.canvas.width;};
 			page.add(bottom);
 
-			ball = new Circ(page.canvas.width/2, 30, 20, "blue");
 			gravity = .25;
-			ball.vy = 0;
 			var numballs = 0;
 			var lastTime = Date.now();
 			page.drive = function() {
@@ -40,12 +45,11 @@
 					}
 				}
 			};
-			label = new Label(20, 20, numballs + " balls");
-			label.update = function(game) {this.text = numballs + " balls";};
-			page.add(label);
-			fpsLabel = new Label(20, 50, page.fps);
-			fpsLabel.update = function(game) {this.text = page.fps + " FPS";};
-			page.add(fpsLabel);
+
+			author = new Label(0, page.canvas.height*(.25-.125), "s1nus.com", "32px", "Emulator", "limegreen");
+			author.update = function(game) {this.x =  game.canvas.width/2-(game.ctx.measureText("s1nus.com").width/2);};
+			page.add(author);
+
 			page.start();
 		});
 	</script>

@@ -1,10 +1,13 @@
-function Label(x, y, text, color="limegreen") {
+function Label(x, y, text, size="16px", font="Emulator", color="limegreen") {
   Entity.call(this, x, y);
   this.text = text;
   this.color = color;
-
+  this.font = font;
+  this.size = size;
+  
   this.draw = function(game) {
     game.ctx.fillStyle = this.color;
+    game.ctx.font = this.size + " " + this.font;
     game.ctx.fillText(this.text, this.x, this.y);
   };
 
