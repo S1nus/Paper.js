@@ -7,43 +7,45 @@
 			margin: 0;
 			background-color: white;
 		}
-		canvas {
-			display: block;
-			margin: 20px auto;
-			border-style: solid;
-			border-width: 1px;
 
-		}
 	</style>
 	<script type="text/javascript" src="../Page.js"></script>
 	<script type="text/javascript" src="../Entity.js"></script>
 	<script type="text/javascript" src="../Clonehood.js"></script>
 	<script type="text/javascript" src="../Input.js"></script>
+	<script type="text/javascript" src="OtherClasses.js"></script>
 	<script type="text/javascript">
 		document.addEventListener("DOMContentLoaded", function() {
 			page = new Page(document.getElementById("canvas"));
+			page.canvas.width = window.innerWidth;
+			page.canvas.height = window.innerHeight;
+			mouse = new Mouse();
+			page.add(mouse);
 
-			frame1 = new Clonehood();
-			frame1.draw = function(game) {return;};
-			frame1.add(new Entity(0,0,page.canvas.width, 1));
-			frame1.add(new Entity(0,0,1,page.canvas.height));
-			frame1.add(new Entity(0, page.canvas.height, page.canvas.width, 1));
-			frame1.add(new Entity(page.canvas.width, 0, 1, page.canvas.height));
-			page.add(frame1);
+			bottom = new Entity(0, page.canvas.height, page.canvas.width, 1);
+			bottom.update = function(game) {this.width = game.canvas.width;};
+			page.add(bottom);
 
 			ball = new Circ(page.canvas.width/2, 30, 20, "blue");
 			gravity = .25;
 			ball.vy = 0;
-			ball.update = function(game) {
-				this.vy -= gravity;
-				this.y -= this.vy;
-				if (this.isTouching(frame1)) {
-					this.vy *= -.75;
-					this.y -= 1;
+			var numballs = 0;
+			var lastTime = Date.now();
+			page.drive = function() {
+				if (this.canvas.mousedown) {
+					if (Date.now() - lastTime >= 125) {
+						page.add(new RandomBall(mouse.x, mouse.y));
+						numballs++;
+						lastTime = Date.now();
+					}
 				}
 			};
-			page.add(ball);
-
+			label = new Label(20, 20, numballs + " balls");
+			label.update = function(game) {this.text = numballs + " balls";};
+			page.add(label);
+			fpsLabel = new Label(20, 50, page.fps);
+			fpsLabel.update = function(game) {this.text = page.fps + " FPS";};
+			page.add(fpsLabel);
 			page.start();
 		});
 	</script>

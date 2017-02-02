@@ -8,7 +8,8 @@ function Page(canvas) {
 	this.isRunning = false;
 
 	this.canvas.mouseOn = true;
-
+	this.canvas.mousedown = false;
+	
 	this.fps = 0;
 	this.frames = 0;
 
@@ -27,6 +28,9 @@ function Page(canvas) {
 	this.canvas.addEventListener("mouseover", function(e) {
 		this.mouseOn = true;
 	});
+
+	this.canvas.addEventListener("mousedown", function() {this.mousedown = true;});
+	this.canvas.addEventListener("mouseup", function() {this.mousedown = false;});
 
 	this.start = function() {
 		this.isRunning = true;
@@ -65,6 +69,7 @@ function Page(canvas) {
 	};
 
 	this.update = function() {
+			this.drive();
 			for (var i = 0; i<this.objects.length; i++) {
 					try {
 						this.objects[i].update(this);
@@ -80,8 +85,12 @@ function Page(canvas) {
 		this.frames = 0;
 	};
 
+	this.drive = function() {
+		return;
+	};
+
 	this.add = function(obj) {
 		this.objects.push(obj);
 	};
-	
+
 }
