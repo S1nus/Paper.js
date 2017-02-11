@@ -44,11 +44,77 @@
 						lastTime = Date.now();
 					}
 				}
+				if (mouse.isTouching(buttons)) {
+					this.canvas.style.cursor = "pointer";
+				}
+				else {
+					this.canvas.style.cursor = "default";
+				}
 			};
+			page.canvas.addEventListener("click", function(e) {
+				if (mouse.isTouching(twitterButton)) {
+					window.open("http://twitter.com/bert3GS", "_blank");
+				}
+				if (mouse.isTouching(emailButton)) {
+					alert("chuckhead7@gmail.com");
+				}
+				if (mouse.isTouching(facebookButton)) {
+					window.open("http://facebook.com/connor.ohara3", "_blank");
+				}
+				if (mouse.isTouching(githubButton)) {
+					window.open("https://github.com/S1nus", "_blank");
+				}
+				if (mouse.isTouching(resumeButton)) {
+					window.open("Resume.pdf", "_blank");
+				}
+			});
 
 			author = new Label(0, page.canvas.height*(.25-.125), "s1nus.com", "32px", "Emulator", "limegreen");
 			author.update = function(game) {this.x =  game.canvas.width/2-(game.ctx.measureText("s1nus.com").width/2);};
 			page.add(author);
+
+			buttons = new Clonehood();
+			page.add(buttons);
+
+			emailButton = new TexRect("./graphics/webicon-mail.png", 100, 100);
+			emailButton.update = function(game) {
+				this.width = this.img.width;
+		    this.height = this.img.height;
+				this.x = game.canvas.width/2-(.5*((this.width*5)+60));
+			};
+			buttons.add(emailButton);
+
+			twitterButton = new TexRect("./graphics/webicon-twitter.png", 100, 100);
+			twitterButton.update = function(game) {
+				this.width = this.img.width;
+		    this.height = this.img.height;
+				this.x = game.canvas.width/2-(.5*((this.width*5)+60))+this.width+10;
+			};
+			buttons.add(twitterButton);
+
+			githubButton = new TexRect("./graphics/webicon-github.png", 100, 100);
+			githubButton.update = function(game) {
+				this.width = this.img.width;
+		    this.height = this.img.height;
+				this.x = game.canvas.width/2-(.5*((this.width*5)+60))+(2*(this.width+10));
+			};
+			buttons.add(githubButton);
+
+			facebookButton = new TexRect("./graphics/webicon-facebook.png", 100, 100);
+			facebookButton.update = function(game) {
+				this.width = this.img.width;
+		    this.height = this.img.height;
+				this.x = game.canvas.width/2-(.5*((this.width*5)+60))+(3*(this.width+10));
+			};
+			buttons.add(facebookButton);
+
+			resumeButton = new TexRect("./graphics/webicon-resume.png", 100, 100);
+			resumeButton.update = function(game) {
+				this.width = this.img.width;
+				this.height = this.img.height;
+				this.x = game.canvas.width/2-(.5*((this.width*5)+60))+(4*(this.width+10));
+			};
+			buttons.add(resumeButton);
 
 			page.start();
 		});
